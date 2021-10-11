@@ -1,4 +1,5 @@
 import requests
+from requests.auth import HTTPDigestAuth
 from flask_httpauth import HTTPDigestAuth
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -49,10 +50,10 @@ def error500(e):
 @auth.login_required
 def ping():
     ping_time = time.time_ns() * 1000
-    r = requests.get('https://smithpong.herokuapp.com/pong', auth=HTTPDigestAuth('vcu', 'rams'))
+    r = requests.get('https://smithpong.herokuapp.com/pong', auth=requests.auth.HTTPDigestAuth('vcu', 'rams'))
     pong_time = time.time_ns() * 1000
     elapsed = {
-        "pingpong_t": pong_time - ping_time
+        'pingpong_t': pong_time - ping_time
     }
     return jsonify(elapsed, 201)
 
