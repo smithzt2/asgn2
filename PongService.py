@@ -1,10 +1,9 @@
 import random
-from requests.auth import HTTPDigestAuth
+from flask_httpauth import HTTPDigestAuth
 from flask import Flask, jsonify
-import SQLAlchemy
-from flask import app
+from flask_sqlalchemy import SQLAlchemy
 import os
-import time
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -54,4 +53,3 @@ def pong():
     return jsonify(payload, 201)
 
 
-if __name__ == '__main__':
