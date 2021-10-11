@@ -40,7 +40,7 @@ def error404(e):
 
 @app.errorhandler(500)
 def error500(e):
-    return '<h1> That doesn\'t work.</h1>'
+    return '<h1> That did not work.</h1>'
 
 @app.route('/ping', methods = ['GET'])
 @auth.login_required
