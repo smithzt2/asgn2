@@ -1,25 +1,30 @@
-import requests
-from requests.auth import HTTPDigestAuth
-from flask import Flask, jsonify
-import SQLAlchemy
-from flask import app
+from flask_httpauth import HTTPDigestAuth
+from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
+
 import os, time
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']=\'sqlite:///' +os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'secret key 1 2 3'
 auth = HTTPDigestAuth()
 db = SQLAlchemy(app)
 
-users = {"vcu":"rams"}
+users = {"vcu": "rams"}
+
 
 class ValidationError(ValueError):
     pass
 
-class User(db.model):
+
+class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
+
 
 @auth.get_password
 def get_pw(username):
@@ -51,5 +56,4 @@ def ping():
 
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
 
