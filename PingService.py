@@ -25,6 +25,7 @@ class ValidationError(ValueError):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True, index=True)
 
 
 @auth.get_password
@@ -38,9 +39,11 @@ def get_pw(username):
 def error404(e):
     return '<h1> The page you are looking for does not exist.</h1>'
 
+
 @app.errorhandler(500)
 def error500(e):
     return '<h1> That did not work.</h1>'
+
 
 @app.route('/ping', methods = ['GET'])
 @auth.login_required
@@ -49,12 +52,10 @@ def ping():
     r = requests.get('https://smithpong.herokuapp.com/pong', auth=HTTPDigestAuth('vcu','rams'))
     pong_time = time.time_ns() * 1000
     elapsed = {
-        "pingpong_t":pong_time - ping_time
+        "pingpong_t": pong_time - ping_time
     }
     return jsonify(elapsed, 201)
 
 
-
-
 if __name__ == '__main__':
-
+    print("hi")
