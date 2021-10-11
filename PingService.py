@@ -49,11 +49,11 @@ def error500(e):
 @app.route('/ping', methods = ['GET'])
 @auth.login_required
 def ping():
-    ping_time = time.time_ns() * 1000
+    ping_time = time.time_ns()
     r = requests.get('https://smithpong.herokuapp.com/pong', auth=requests.auth.HTTPDigestAuth('vcu', 'rams'))
-    pong_time = time.time_ns() * 1000
+    pong_time = time.time_ns()
     elapsed = {
-        'pingpong_t': pong_time - ping_time
+        'pingpong_t': (pong_time - ping_time)
     }
     return jsonify(elapsed, 201)
 
